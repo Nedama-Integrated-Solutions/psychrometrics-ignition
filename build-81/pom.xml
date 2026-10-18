@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.nedama.psychro</groupId>
+        <artifactId>psychro-parent</artifactId>
+        <version>0.1.0</version>
+    </parent>
+
+    <artifactId>psychro-build-81</artifactId>
+    <packaging>pom</packaging>
+
+    <name>Psychrometrics Module Build (Ignition 8.1)</name>
+    <description>Packages the core, common and scope jars into the .modl file for Ignition 8.1.</description>
+
+    <properties>
+        <module-name>Psychrometrics</module-name>
+        <module-description>Psychrometric script and expression functions: dew point, wet bulb, humidity ratio, enthalpy and more, from the ASHRAE equations.</module-description>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.nedama.psychro</groupId>
+            <artifactId>psychro-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.nedama.psychro</groupId>
+            <artifactId>psychro-common-81</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.nedama.psychro</groupId>
+            <artifactId>psychro-gateway-81</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.nedama.psychro</groupId>
+            <artifactId>psychro-client-81</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.nedama.psychro</groupId>
+            <artifactId>psychro-designer-81</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.inductiveautomation.ignitionsdk</groupId>
+                <artifactId>ignition-maven-plugin</artifactId>
+                <version>1.1.0</version>
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>modl</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <!-- Each name below must equal that project's Maven <name>, which is set to its artifactId.
+                         If they differ, the plugin logs ignitionScope=null and builds a module with no jars in it. -->
+                    <projectScopes>
+                        <projectScope>
+                            <name>psychro-core</name>
+                            <scope>CDG</scope>
+                        </projectScope>
+                        <projectScope>
+                            <name>psychro-common-81</name>
+                            <scope>CDG</scope>
+                        </projectScope>
+                        <projectScope>
+                            <name>psychro-gateway-81</name>
+                            <scope>G</scope>
+                        </projectScope>
+                        <projectScope>
+                            <name>psychro-client-81</name>
+                            <scope>C</scope>
+                        </projectScope>
+                        <projectScope>
+                            <name>psychro-designer-81</name>
+                            <scope>D</scope>
+                        </projectScope>
+                    </projectScopes>
+
+                    <!-- Never change the module ID after the first install anywhere. -->
+                    <moduleId>com.nedama.ignition.psychro</moduleId>
+                    <moduleName>${module-name}</moduleName>
+                    <moduleDescription>${module-description}</moduleDescription>
+                    <moduleVersion>${project.version}</moduleVersion>
+                    <requiredIgnitionVersion>${psychro.required-ignition-version}</requiredIgnitionVersion>
+                    <licenseFile>license.html</licenseFile>
+
+                    <hooks>
+                        <hook>
+                            <scope>C</scope>
+                            <hookClass>com.nedama.psychro.client81.PsychroClientHook</hookClass>
+                        </hook>
+                        <hook>
+                            <scope>D</scope>
+                            <hookClass>com.nedama.psychro.designer81.PsychroDesignerHook</hookClass>
+                        </hook>
+                        <hook>
+                            <scope>G</scope>
+                            <hookClass>com.nedama.psychro.gateway81.PsychroGatewayHook</hookClass>
+                        </hook>
+                    </hooks>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

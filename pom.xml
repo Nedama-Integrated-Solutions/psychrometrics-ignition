@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.nedama.psychro</groupId>
+    <artifactId>psychro-parent</artifactId>
+    <version>0.1.0</version>
+    <packaging>pom</packaging>
+
+    <name>Psychrometrics (parent)</name>
+    <description>
+        Psychrometric script and expression functions for Inductive Automation Ignition, built by Nedama Integrated Solutions.
+    </description>
+
+    <modules>
+        <!-- Plain Java, no Ignition dependencies. Shared by the 8.1 and 8.3 builds. -->
+        <module>psychro-core</module>
+        <!-- Ignition 8.1: script module and expression functions, one hook per scope, and the module packaging -->
+        <module>common-81</module>
+        <module>gateway-81</module>
+        <module>client-81</module>
+        <module>designer-81</module>
+        <module>build-81</module>
+        <!-- Ignition 8.3: the same parts, built against the 8.3 SDK -->
+        <module>common-83</module>
+        <module>gateway-83</module>
+        <module>client-83</module>
+        <module>designer-83</module>
+        <module>build-83</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Ignition 8.1 SDK, pinned to the OLDEST gateway the module supports, as for Arifa. Compiling against the
+             oldest supported release means the code cannot accidentally use an API a supported gateway lacks.
+             Never use a -SNAPSHOT here: it changes between builds. -->
+        <ignition-platform-version>8.1.33</ignition-platform-version>
+        <ignition-sdk-version>${ignition-platform-version}</ignition-sdk-version>
+        <!-- The oldest gateway the module will install on. 8.1.33 is the first that runs on Java 17. -->
+        <psychro.required-ignition-version>8.1.33</psychro.required-ignition-version>
+
+        <!-- Ignition 8.3 SDK, pinned to the OLDEST 8.3 gateway the module supports, for the same reason as above.
+             8.3.3 matches Arifa's 8.3 floor. Never use a -SNAPSHOT here. -->
+        <ignition-83-platform-version>8.3.3</ignition-83-platform-version>
+        <ignition-83-sdk-version>${ignition-83-platform-version}</ignition-83-sdk-version>
+        <psychro.required-ignition-83-version>8.3.3</psychro.required-ignition-83-version>
+
+        <!-- The version written into the 8.3 module. It follows the project version. A development build can override
+             it on the command line, for example -Dpsychro.module-version-83=0.1.0.1, so the gateway's Modules page
+             shows which test build is loaded. -->
+        <psychro.module-version-83>${project.version}</psychro.module-version-83>
+    </properties>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>ia-releases</id>
+            <url>https://nexus.inductiveautomation.com/repository/inductiveautomation-releases</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <repositories>
+        <repository>
+            <id>ia-releases</id>
+            <url>https://nexus.inductiveautomation.com/repository/inductiveautomation-releases</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>ia-snapshots</id>
+            <url>https://nexus.inductiveautomation.com/repository/inductiveautomation-snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>ia-thirdparty</id>
+            <url>https://nexus.inductiveautomation.com/repository/inductiveautomation-thirdparty</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.13.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.5.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.4.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- Fail fast with a clear message if the wrong JDK or an old Maven is used -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>enforce-build-environment</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>[17,)</version>
+                                    <message>Psychrometrics needs JDK 17 or newer. Run 'java -version' and check JAVA_HOME.</message>
+                                </requireJavaVersion>
+                                <requireMavenVersion>
+                                    <version>[3.8.0,)</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

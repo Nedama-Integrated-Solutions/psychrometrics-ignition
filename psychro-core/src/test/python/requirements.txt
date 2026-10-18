@@ -1,0 +1,2 @@
+psychrolib==2.5.0
+CoolProp>=6.6

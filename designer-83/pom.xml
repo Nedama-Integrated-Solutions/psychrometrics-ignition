@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.nedama.psychro</groupId>
+        <artifactId>psychro-parent</artifactId>
+        <version>0.1.0</version>
+    </parent>
+
+    <artifactId>psychro-designer-83</artifactId>
+    <packaging>jar</packaging>
+
+    <!-- Must equal the artifactId: build-83 finds this jar by name. -->
+    <name>psychro-designer-83</name>
+    <description>Ignition 8.3 designer hook: registers the functions for the script console, bindings and autocomplete.</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.nedama.psychro</groupId>
+            <artifactId>psychro-common-83</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.inductiveautomation.ignitionsdk</groupId>
+            <artifactId>ignition-common</artifactId>
+            <version>${ignition-83-sdk-version}</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.inductiveautomation.ignitionsdk</groupId>
+            <artifactId>client-api</artifactId>
+            <version>${ignition-83-sdk-version}</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.inductiveautomation.ignitionsdk</groupId>
+            <artifactId>designer-api</artifactId>
+            <version>${ignition-83-sdk-version}</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>

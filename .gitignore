@@ -1,0 +1,23 @@
+# Build output
+target/
+
+# Signed releases are built locally and attached to GitHub Releases, never committed
+release/
+
+# Signing material must never enter Git
+*.p12
+*.pfx
+*.jks
+
+# Accuracy test output written by the Ignition Script Console
+ignition_results.csv
+
+# Python virtual environment and caches
+.venv/
+__pycache__/
+*.pyc
+
+# Editor files
+.vscode/
+.idea/
+*.iml
