@@ -47,7 +47,7 @@ psychroDewPoint({[.]AirTemp}, {[.]AirRH})
 | Specific volume | m³ per kg dry air |
 | Altitude | m, -1000 to 11000 |
 
-- **Pressure is always an argument.** At 1,700 m the air holds about a fifth more water per kilogram than at sea
+- **Pressure is always an argument.** At 1,700 m the air holds nearly a quarter more water per kilogram than at sea
   level, so assuming sea level gives wrong results at altitude. Use `pressureFromAltitude` when the site has no
   barometer.
 - **Relative humidity is relative to liquid water at every temperature**, as most RH sensors report it. Below 0 °C,
