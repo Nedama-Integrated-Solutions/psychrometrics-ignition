@@ -5,6 +5,8 @@
 ![Ignition 8.1](https://img.shields.io/badge/Ignition-8.1.33%2B-orange)
 ![Ignition 8.3](https://img.shields.io/badge/Ignition-8.3.3%2B-orange)
 
+**Full manual:** [docs.nedama.com/psychrometrics](https://docs.nedama.com/psychrometrics/)
+
 Psychrometric script and expression functions for Inductive Automation Ignition. Turn the temperature, humidity
 and pressure readings a plant already has into the values engineers act on: dew point, frost point, wet bulb,
 moisture content, enthalpy and air density. Built on the ASHRAE Handbook equations by Nedama Integrated Solutions.
